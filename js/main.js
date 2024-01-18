@@ -1,4 +1,4 @@
-import { addUserDetailstoPage, addRepoDetailstoPage } from './uiUpdate.js';
+import { addUserDetailstoPage, addRepoDetailstoPage, filterRepoData } from './uiUpdate.js';
 import { getlastPageNumber } from './api.js';
 
 let githubUsername = 'octocat';
@@ -11,6 +11,11 @@ $('.paginationline').hide();
 
 $(document).ready(function () {
     $('.card-container').hide();
+
+    $('#searchRepo').on('input', function () {
+        const repoName = $(this).val(); // Get the input value
+        filterRepoData(repoName);
+    });
 
     $('.dropdown-item').click(function (event) {
         event.preventDefault(); // Prevent the default action
@@ -54,7 +59,6 @@ function setLastPageNumber() {
 }
 
 function handlePaginationClick(clickedButton) {
-
     if (clickedButton === 'first') {
         currentPage = 1;
     } else if (clickedButton === 'prev' && currentPage > 1) {

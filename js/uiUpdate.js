@@ -91,12 +91,14 @@ function addPlaceholderCards() {
  * @param {string} username - The username of the user.
  * @returns {void}
  */
+let apiData = [];
 export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
     // Run the other function here
     addPlaceholderCards();
 
     getUserRepoDetails(username, currentPage, reposPerPage)
         .then(function (response) {
+            apiData = response;
             const cards = response.map(createCard).join('');
             $('.repo-detail-card').html(cards);
         })
@@ -104,6 +106,24 @@ export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
             console.error('Error:', error);
         });
 }
+
+export function filterRepoData(repoName) {
+    // Convert the repoName to lowercase for case-insensitive comparison
+    const lowercaseRepoName = repoName.toLowerCase();
+
+    // Filter the data
+    const filteredData = apiData.filter(item => item.name.toLowerCase().includes(lowercaseRepoName));
+
+    // Clear the card container
+    $('.repo-detail-card').empty();
+
+    // Add the cards to the container
+    filteredData.forEach(item => {
+        const card = createCard(item);
+        $('.repo-detail-card').append(card);
+    });
+}
+
 
 
 /**
