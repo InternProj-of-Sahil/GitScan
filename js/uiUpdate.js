@@ -55,6 +55,36 @@ function createCard(data) {
     `;
 }
 
+function createPlaceholderCard() {
+    return `
+    <div class="col">
+                <div class="card placeholder-glow">
+                    <div class="card-body placeholder-glow">
+                        <h5 class="card-title placeholder">Card title</h5>
+                        <p class="card-text placeholder">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <div class="d-flex flex-wrap gap-2 ">
+                            <a href="#" class="btn btn-primary btn-light rounded-pill placeholder" style="cursor: default;">Topics</a>
+                            <a href="#" class="btn btn-primary btn-light rounded-pill placeholder" style="cursor: default;">Topics</a>
+                            <a href="#" class="btn btn-primary btn-light rounded-pill placeholder" style="cursor: default;">Topics</a>
+                            <a href="#" class="btn btn-primary btn-light rounded-pill placeholder" style="cursor: default;">Topics</a>
+                            <a href="#" class="btn btn-primary btn-light rounded-pill placeholder" style="cursor: default;">Topics</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    `
+
+}
+
+function addPlaceholderCards() {
+    let placeholderCards = '';
+    for (let i = 0; i < 5; i++) {
+        placeholderCards += createPlaceholderCard();
+    }
+    $('.repo-detail-card').html(placeholderCards);
+}
+
 /**
  * Adds repository details cards to the page.
  * 
@@ -62,6 +92,9 @@ function createCard(data) {
  * @returns {void}
  */
 export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
+    // Run the other function here
+    addPlaceholderCards();
+
     getUserRepoDetails(username, currentPage, reposPerPage)
         .then(function (response) {
             const cards = response.map(createCard).join('');
