@@ -9,14 +9,22 @@ import { getUserDetails, getUserRepoDetails } from './api.js';
 export function addUserDetailstoPage(username) {
     getUserDetails(username)
         .then(function (response) {
-            // code to update user details
+            $('.user-card-title').text(response.name || response.login);
+            $('.user-card-bio').first().text(response.bio || 'No bio available');
+            $('.user-card-location').last().text(response.location || 'No location available');
+            $('.user-card-img-top').attr('src', response.avatar_url);
+            $('.user-card-github-link').first().attr('href', response.html_url);
+            $('.user-card-github-link').show();
+            $('.user-card-github-link').text('GitHub');
+            if (response.twitter_username) {
+                $('.user-card-twitter-link').attr('href', `https://twitter.com/${response.twitter_username}`);
+                $('.user-card-twitter-link').show();
+            } else {
+                $('.user-card-twitter-link').hide();
+            }
         })
         .catch(function (error) {
-            if (error.response && error.response.status === 404) {
-                handleUserNotFoundError();
-            } else {
-                handleUserNotFoundError();
-            }
+            handleUserNotFoundError();
         });
 }
 
@@ -24,6 +32,8 @@ function handleUserNotFoundError() {
     console.log('User not found');
     $('.user-card-title').html('<strong> User Not Found! </strong>');
     $('.user-card-bio').first().text('Please Recheck the GitHub Username.');
+    $('.user-card-img-top').attr('src', '/assets/img/user-not-found.png');
+    $('.user-card-github-link').hide();
     $('.repo-detail-card').empty();
     $('.paginationline').hide();
     $('.repoFilterSearch').hide();
