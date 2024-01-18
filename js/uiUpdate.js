@@ -29,7 +29,6 @@ export function addUserDetailstoPage(username) {
 }
 
 function handleUserNotFoundError() {
-    console.log('User not found');
     $('.user-card-title').html('<strong> User Not Found! </strong>');
     $('.user-card-bio').first().text('Please Recheck the GitHub Username.');
     $('.user-card-img-top').attr('src', '/assets/img/user-not-found.png');

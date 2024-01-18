@@ -54,7 +54,6 @@ function setLastPageNumber() {
             lastPage = response;
         })
         .catch(function (error) {
-            console.error('Error:', error);
             lastPage = 1;
         });
 }
