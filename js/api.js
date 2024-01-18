@@ -1,5 +1,3 @@
-import { github_api_key } from "./env.js";
-
 /**
  * Retrieves details of a user from the GitHub API.
  * @param {string} githubUsername - The GitHub username of the user.
@@ -8,10 +6,7 @@ import { github_api_key } from "./env.js";
 export function getUserDetails(githubUsername) {
     return $.ajax({
         url: `https://api.github.com/users/${githubUsername}`,
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${github_api_key}`
-        }
+        method: 'GET'
     });
 }
 
@@ -26,9 +21,6 @@ export function getUserRepoDetails(githubUsername, page_number, per_page_repo) {
     return $.ajax({
         url: `https://api.github.com/users/${githubUsername}/repos`,
         method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${github_api_key}`
-        },
         data: {
             'per_page': per_page_repo,
             'page': page_number
@@ -66,9 +58,6 @@ export function getlastPageNumber(githubUsername, per_page_repo) {
         $.ajax({
             url: `https://api.github.com/users/${githubUsername}/repos`,
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${github_api_key}`
-            },
             data: {
                 'per_page': per_page_repo
             }
