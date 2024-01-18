@@ -8,6 +8,7 @@ export let lastPage = 10; // Global variable to store the last page number
 
 $('.user-card-twitter-link').hide();
 $('.paginationline').hide();
+$('.repoFilterSearch').hide();
 
 $(document).ready(function () {
     $('.card-container').hide();
@@ -69,7 +70,7 @@ function handlePaginationClick(clickedButton) {
         currentPage = lastPage;
     }
     // Set the current page
-    $('.pagination .current-page').text(`Page ${currentPage}/${lastPage}`);
+    $('.pagination .current-page').text(`${currentPage}/${lastPage}`);
 
     // Update the visibility of the Prev and Next buttons
     $('.pagination .page-link:contains("Prev")').parent().toggle(currentPage > 1);

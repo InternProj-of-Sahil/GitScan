@@ -9,23 +9,24 @@ import { getUserDetails, getUserRepoDetails } from './api.js';
 export function addUserDetailstoPage(username) {
     getUserDetails(username)
         .then(function (response) {
-            $('.user-card-title').text(response.name || response.login);
-            $('.user-card-bio').first().text(response.bio || 'No bio available');
-            $('.user-card-location').last().text(response.location || 'No location available');
-            $('.user-card-img-top').attr('src', response.avatar_url);
-            $('.user-card-github-link').first().attr('href', response.html_url);
-            $('.user-card-github-link').show();
-            $('.user-card-github-link').text('GitHub');
-            if (response.twitter_username) {
-                $('.user-card-twitter-link').attr('href', `https://twitter.com/${response.twitter_username}`);
-                $('.user-card-twitter-link').show();
-            } else {
-                $('.user-card-twitter-link').hide();
-            }
+            // code to update user details
         })
         .catch(function (error) {
-            console.error('Error:', error);
+            if (error.response && error.response.status === 404) {
+                handleUserNotFoundError();
+            } else {
+                handleUserNotFoundError();
+            }
         });
+}
+
+function handleUserNotFoundError() {
+    console.log('User not found');
+    $('.user-card-title').html('<strong> User Not Found! </strong>');
+    $('.user-card-bio').first().text('Please Recheck the GitHub Username.');
+    $('.repo-detail-card').empty();
+    $('.paginationline').hide();
+    $('.repoFilterSearch').hide();
 }
 
 /**
@@ -101,9 +102,10 @@ export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
             apiData = response;
             const cards = response.map(createCard).join('');
             $('.repo-detail-card').html(cards);
+            $('.repoFilterSearch').show();
         })
         .catch(function (error) {
-            console.error('Error:', error);
+            handleUserNotFoundError();
         });
 }
 
@@ -124,36 +126,3 @@ export function filterRepoData(repoName) {
     });
 }
 
-
-
-/**
- * A test function for logging responses.
- * 
- * @param {string} username - The username of the user.
- * @returns {void}
- */
-export function testFunction(username) {
-    // getUserDetails(username)
-    //     .then(function (response) {
-    //         console.log('Response:', response);
-    //     })
-    //     .catch(function (error) {
-    //         console.error('Error:', error);
-    //     });
-
-    // getUserRepoDetails(username, 1, 10)
-    //     .then(function (response) {
-    //         console.log('Response:', response);
-    //     })
-    //     .catch(function (error) {
-    //         console.error('Error:', error);
-    //     });
-
-    // getlastPageNumber(username, 10)
-    //     .then(function (response) {
-    //         console.log('Response:', response);
-    //     })
-    //     .catch(function (error) {
-    //         console.error('Error:', error);
-    //     });
-}
