@@ -14,6 +14,8 @@ export function addUserDetailstoPage(username) {
             $('.user-card-location').last().text(response.location || 'No location available');
             $('.user-card-img-top').attr('src', response.avatar_url);
             $('.user-card-github-link').first().attr('href', response.html_url);
+            $('.user-card-github-link').show();
+            $('.user-card-github-link').text('GitHub');
             if (response.twitter_username) {
                 $('.user-card-twitter-link').attr('href', `https://twitter.com/${response.twitter_username}`);
                 $('.user-card-twitter-link').show();
@@ -60,7 +62,6 @@ function createCard(data) {
  * @returns {void}
  */
 export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
-    console.log('Running');
     getUserRepoDetails(username, currentPage, reposPerPage)
         .then(function (response) {
             const cards = response.map(createCard).join('');
@@ -79,8 +80,6 @@ export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
  * @returns {void}
  */
 export function testFunction(username) {
-    console.log('test');
-
     // getUserDetails(username)
     //     .then(function (response) {
     //         console.log('Response:', response);

@@ -1,4 +1,4 @@
-import { addUserDetailstoPage, addRepoDetailstoPage, testFunction } from './uiUpdate.js';
+import { addUserDetailstoPage, addRepoDetailstoPage } from './uiUpdate.js';
 import { getlastPageNumber } from './api.js';
 
 let githubUsername = 'octocat';
@@ -6,11 +6,16 @@ export let currentPage = 1; // Global variable to store the current page number
 export let reposPerPage = 10; // Global variable to store the number of repositories per page
 export let lastPage = 10; // Global variable to store the last page number
 
+$('.user-card-twitter-link').hide();
+$('.paginationline').hide();
+
 $(document).ready(function () {
+    $('.card-container').hide();
+
     $('.dropdown-item').click(function (event) {
         event.preventDefault(); // Prevent the default action
         reposPerPage = parseInt($(this).text()); // Set the global variable to the clicked value
-        setLastPageNumber().then(function() {
+        setLastPageNumber().then(function () {
             handlePaginationClick('first');
             addRepoDetailstoPage(githubUsername, 1, reposPerPage);
         });
@@ -20,16 +25,17 @@ $(document).ready(function () {
         event.preventDefault(); // Prevent form submission
         githubUsername = $('#username').val();
         addUserDetailstoPage(githubUsername);
-        setLastPageNumber().then(function() {
+        setLastPageNumber().then(function () {
             handlePaginationClick('first');
             addRepoDetailstoPage(githubUsername, currentPage, reposPerPage);
         });
+    $('.paginationline').show();
     });
 
     $('.pagination .page-link').click(function (event) {
         event.preventDefault(); // Prevent the default action
         const clickedButton = $(this).text().trim().toLowerCase();
-        setLastPageNumber().then(function() {
+        setLastPageNumber().then(function () {
             handlePaginationClick(clickedButton);
             addRepoDetailstoPage(githubUsername, currentPage, reposPerPage);
         });
@@ -48,7 +54,7 @@ function setLastPageNumber() {
 }
 
 function handlePaginationClick(clickedButton) {
-    
+
     if (clickedButton === 'first') {
         currentPage = 1;
     } else if (clickedButton === 'prev' && currentPage > 1) {
@@ -60,7 +66,6 @@ function handlePaginationClick(clickedButton) {
     }
     // Set the current page
     $('.pagination .current-page').text(`Page ${currentPage}/${lastPage}`);
-    console.log('lastpage: ' + lastPage);
 
     // Update the visibility of the Prev and Next buttons
     $('.pagination .page-link:contains("Prev")').parent().toggle(currentPage > 1);

@@ -1,3 +1,5 @@
+import { github_api_key } from "./env.js";
+
 /**
  * Retrieves details of a user from the GitHub API.
  * @param {string} githubUsername - The GitHub username of the user.
@@ -6,7 +8,10 @@
 export function getUserDetails(githubUsername) {
     return $.ajax({
         url: `https://api.github.com/users/${githubUsername}`,
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${github_api_key}`
+        }
     });
 }
 
@@ -21,6 +26,9 @@ export function getUserRepoDetails(githubUsername, page_number, per_page_repo) {
     return $.ajax({
         url: `https://api.github.com/users/${githubUsername}/repos`,
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${github_api_key}`
+        },
         data: {
             'per_page': per_page_repo,
             'page': page_number
@@ -58,17 +66,23 @@ export function getlastPageNumber(githubUsername, per_page_repo) {
         $.ajax({
             url: `https://api.github.com/users/${githubUsername}/repos`,
             method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${github_api_key}`
+            },
             data: {
                 'per_page': per_page_repo
             }
-        }).done(function(response, textStatus, jqXHR) {
+        }).done(function (response, textStatus, jqXHR) {
             const linkHeader = jqXHR.getResponseHeader('Link');
-            const pageNumber = getPageNumber(linkHeader);
-            if (pageNumber !== null) {
-                lastPageNumber = pageNumber;
+            if (linkHeader !== null) {
+                const pageNumber = getPageNumber(linkHeader);
+                if (pageNumber !== null) {
+                    lastPageNumber = pageNumber;
+                }
             }
+
             resolve(lastPageNumber);
-        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }).fail(function (jqXHR, textStatus, errorThrown) {
             reject(errorThrown);
         });
     });
