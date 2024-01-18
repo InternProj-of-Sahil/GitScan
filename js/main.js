@@ -59,6 +59,10 @@ function setLastPageNumber() {
         });
 }
 
+/**
+ * Handles the pagination click event.
+ * @param {string} clickedButton - The button that was clicked ('first', 'prev', 'next', 'last').
+ */
 function handlePaginationClick(clickedButton) {
     if (clickedButton === 'first') {
         currentPage = 1;
@@ -77,6 +81,3 @@ function handlePaginationClick(clickedButton) {
     $('.pagination .page-link:contains("Next")').parent().toggle(currentPage < lastPage);
 
 }
-
-
-

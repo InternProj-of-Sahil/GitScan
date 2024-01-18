@@ -56,6 +56,11 @@ function createCard(data) {
     `;
 }
 
+/**
+ * Creates a placeholder card with default content.
+ * 
+ * @returns {string} The HTML markup for the placeholder card.
+ */
 function createPlaceholderCard() {
     return `
     <div class="col">
