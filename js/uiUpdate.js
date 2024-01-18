@@ -1,4 +1,4 @@
-import { getUserDetails, getUserRepoDetails, getlastPageNumber } from './api.js';
+import { getUserDetails, getUserRepoDetails } from './api.js';
 
 /**
  * Updates the user details card on the page.
@@ -9,7 +9,6 @@ import { getUserDetails, getUserRepoDetails, getlastPageNumber } from './api.js'
 export function addUserDetailstoPage(username) {
     getUserDetails(username)
         .then(function (response) {
-            console.log('Response:', response);
             $('.user-card-title').text(response.name || response.login);
             $('.user-card-bio').first().text(response.bio || 'No bio available');
             $('.user-card-location').last().text(response.location || 'No location available');
@@ -35,8 +34,8 @@ export function addUserDetailstoPage(username) {
  */
 function createCard(data) {
     const topics = data.topics || [];
-    const topicButtons = topics.length > 0 
-        ? topics.map(topic => `<button class="btn btn-primary btn-light rounded-pill" style="cursor: default;">${topic}</button>`).join('') 
+    const topicButtons = topics.length > 0
+        ? topics.map(topic => `<button class="btn btn-primary btn-light rounded-pill" style="cursor: default;">${topic}</button>`).join('')
         : '<button class="btn btn-primary btn-light rounded-pill" style="cursor: default;"> No Topic</button>';
 
     return `
@@ -60,10 +59,10 @@ function createCard(data) {
  * @param {string} username - The username of the user.
  * @returns {void}
  */
-export function addRepoDetailstoPage(username) {
-    getUserRepoDetails(username, 1, 10)
+export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
+    console.log('Running');
+    getUserRepoDetails(username, currentPage, reposPerPage)
         .then(function (response) {
-            console.log('Response:', response);
             const cards = response.map(createCard).join('');
             $('.repo-detail-card').html(cards);
         })
@@ -71,6 +70,7 @@ export function addRepoDetailstoPage(username) {
             console.error('Error:', error);
         });
 }
+
 
 /**
  * A test function for logging responses.
@@ -89,13 +89,13 @@ export function testFunction(username) {
     //         console.error('Error:', error);
     //     });
 
-    getUserRepoDetails(username, 1, 10)
-        .then(function (response) {
-            console.log('Response:', response);
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
-        });
+    // getUserRepoDetails(username, 1, 10)
+    //     .then(function (response) {
+    //         console.log('Response:', response);
+    //     })
+    //     .catch(function (error) {
+    //         console.error('Error:', error);
+    //     });
 
     // getlastPageNumber(username, 10)
     //     .then(function (response) {
