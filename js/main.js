@@ -13,10 +13,18 @@ $('.repoFilterSearch').hide();
 $(document).ready(function () {
     $('.card-container').hide();
 
-    $('#searchRepo').on('input', function () {
+    $('#searchRepo').on('input', function (event) {
+        event.preventDefault(); // Prevent the default action
         const repoName = $(this).val(); // Get the input value
         filterRepoData(repoName);
     });
+
+    $('#searchRepo').closest('form').on('submit', function (event) {
+        event.preventDefault(); // Prevent form submission
+        const repoName = $('#searchRepo').val(); // Get the input value
+        filterRepoData(repoName);
+    });
+    
 
     $('.dropdown-item').click(function (event) {
         event.preventDefault(); // Prevent the default action
@@ -35,7 +43,7 @@ $(document).ready(function () {
             handlePaginationClick('first');
             addRepoDetailstoPage(githubUsername, currentPage, reposPerPage);
         });
-    $('.paginationline').show();
+        $('.paginationline').show();
     });
 
     $('.pagination .page-link').click(function (event) {

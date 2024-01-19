@@ -13,7 +13,7 @@
 <body>
 
     <!-- navbar -->
-    <nav class="navbar">
+    <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="https://github.com/InternProj-of-Sahil/GitScan" target="_blank">
                 <img src="/assets/brand/512.png" alt="Logo" width="32px" height="32px"
@@ -51,7 +51,8 @@
                     <p class="user-card-location"></p>
                     <a href="#" class="user-card-twitter-link btn btn-primary" target="_blank"> Twitter
                     </a>
-                    <a href="https://github.com/InternProj-of-Sahil/GitScan" class="user-card-github-link btn btn-primary" target="_blank">
+                    <a href="https://github.com/InternProj-of-Sahil/GitScan"
+                        class="user-card-github-link btn btn-primary" target="_blank">
                         <img src="/assets/img/github_logo.png" alt="Button Image" width="24px" height="24px"
                             class="rounded-circle"> Source Code
                     </a>
@@ -65,8 +66,14 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="d-flex justify-content-center">
-                    <form class="d-flex" role="search" style="width: 50%;" >
-                        <input class="form-control me-2" id="searchRepo" type="search" placeholder="Repo Name" aria-label="Search">
+                    <form class="" role="search" style="width: 70%;">
+                        <label for="searchRepo" class="visually" style="font-size: 17px;"><strong>Filter Repositories: </strong></label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <img src="/assets/img/filter.png" alt="Filter Icon" width="24px" height="24px">
+                            </span>
+                            <input class="form-control me-2" id="searchRepo" type="search" placeholder="Repo Name" aria-label="Search">
+                        </div>
                     </form>
                 </div>
             </div>
