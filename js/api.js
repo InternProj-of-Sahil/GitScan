@@ -28,6 +28,18 @@ export function getUserRepoDetails(githubUsername, page_number, per_page_repo) {
     });
 }
 
+/**
+ * Retrieves repository details of a user from the GitHub API.
+ * @param {string} githubUsername - The GitHub username of the user.
+ * @returns {Promise} A Promise that resolves with the user's repository details.
+ */
+export function getAllRepoData(githubUsername) {
+    return $.ajax({
+        url: `https://api.github.com/users/${githubUsername}/repos`,
+        method: 'GET'
+    });
+}
+
 
 /**
  * Extracts the last page number from the Link header of a GitHub API response.

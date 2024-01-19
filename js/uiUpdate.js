@@ -1,4 +1,4 @@
-import { getUserDetails, getUserRepoDetails } from './api.js';
+import { getUserDetails, getUserRepoDetails, getAllRepoData } from './api.js';
 
 /**
  * Updates the user details card on the page.
@@ -65,8 +65,9 @@ function createCard(data) {
     `;
 }
 
+
 /**
- * Creates a placeholder card with default content.
+ * Creates a placeholder card with dummy content.
  * 
  * @returns {string} The HTML markup for the placeholder card.
  */
@@ -113,7 +114,6 @@ export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
 
     getUserRepoDetails(username, currentPage, reposPerPage)
         .then(function (response) {
-            apiData = response;
             const cards = response.map(createCard).join('');
             $('.repo-detail-card').html(cards);
             $('.repoFilterSearch').show();
@@ -123,6 +123,28 @@ export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
         });
 }
 
+
+/**
+ * Adds repository data for a given username.
+ * 
+ * @param {string} username - The username for which to retrieve repository data.
+ */
+export function addRepoData(username) {
+    getAllRepoData(username)
+        .then(function (response) {
+            apiData = response;
+        })
+        .catch(function (error) {
+            handleUserNotFoundError();
+        });
+}
+
+/**
+ * Filters the repository data based on the provided repoName.
+ * 
+ * @param {string} repoName - The name of the repository to filter.
+ * @returns {void}
+ */
 export function filterRepoData(repoName) {
     // Convert the repoName to lowercase for case-insensitive comparison
     const lowercaseRepoName = repoName.toLowerCase();

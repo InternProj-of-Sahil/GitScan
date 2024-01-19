@@ -1,4 +1,4 @@
-import { addUserDetailstoPage, addRepoDetailstoPage, filterRepoData } from './uiUpdate.js';
+import { addUserDetailstoPage, addRepoDetailstoPage, filterRepoData, addRepoData } from './uiUpdate.js';
 import { getlastPageNumber } from './api.js';
 
 let githubUsername = 'octocat';
@@ -42,6 +42,7 @@ $(document).ready(function () {
         setLastPageNumber().then(function () {
             handlePaginationClick('first');
             addRepoDetailstoPage(githubUsername, currentPage, reposPerPage);
+            addRepoData(githubUsername);
         });
         $('.paginationline').show();
     });
