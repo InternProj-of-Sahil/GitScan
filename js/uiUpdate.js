@@ -107,7 +107,6 @@ function addPlaceholderCards() {
  * @param {string} username - The username of the user.
  * @returns {void}
  */
-let apiData = [];
 export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
     // Run the other function here
     addPlaceholderCards();
@@ -129,6 +128,7 @@ export function addRepoDetailstoPage(username, currentPage, reposPerPage) {
  * 
  * @param {string} username - The username for which to retrieve repository data.
  */
+let apiData = [];
 export function addRepoData(username) {
     getAllRepoData(username)
         .then(function (response) {

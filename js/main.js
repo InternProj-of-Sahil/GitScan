@@ -16,7 +16,11 @@ $(document).ready(function () {
     $('#searchRepo').on('input', function (event) {
         event.preventDefault(); // Prevent the default action
         const repoName = $(this).val(); // Get the input value
-        filterRepoData(repoName);
+        if (repoName === '') {
+            addRepoDetailstoPage(githubUsername, currentPage, reposPerPage);
+        } else {
+            filterRepoData(repoName);
+        }
     });
 
     $('#searchRepo').closest('form').on('submit', function (event) {

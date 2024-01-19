@@ -36,7 +36,10 @@ export function getUserRepoDetails(githubUsername, page_number, per_page_repo) {
 export function getAllRepoData(githubUsername) {
     return $.ajax({
         url: `https://api.github.com/users/${githubUsername}/repos`,
-        method: 'GET'
+        method: 'GET',
+        data: {
+            'per_page': 1e9
+        }
     });
 }
 
